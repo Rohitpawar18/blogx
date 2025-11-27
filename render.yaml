@@ -1,7 +1,9 @@
 services:
   - type: web
     name: blogx
-    env: java
+    env: docker
     plan: free
-    buildCommand: mvn clean package
-    startCommand: java -jar target/dependency/webapp-runner.jar target/blogx.war --port $PORT
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: MONGODB_URI
+        value: mongodb+srv://blogx-user:Blogx%40123@blogx-cluster.rh53lkm.mongodb.net/blogx?retryWrites=true&w=majority
