@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: blogx
+    env: java
+    plan: free
+    buildCommand: mvn clean package
+    startCommand: java -jar target/dependency/webapp-runner.jar target/blogx.war --port $PORT
