@@ -1,9 +1,18 @@
 services:
   - type: web
     name: blogx
-    env: docker
+    env: node
     plan: free
-    dockerfilePath: ./Dockerfile
+    buildCommand: |
+      # Install Java and Maven
+      apt-get update && apt-get install -y maven
+      # Build the project
+      mvn clean package
+      # Create a simple start script
+      echo '#!/bin/bash
+      java -jar target/dependency/webapp-runner.jar target/blogx.war --port $PORT' > start.sh
+      chmod +x start.sh
+    startCommand: ./start.sh
     envVars:
       - key: MONGODB_URI
         value: mongodb+srv://blogx-user:Blogx%40123@blogx-cluster.rh53lkm.mongodb.net/blogx?retryWrites=true&w=majority
